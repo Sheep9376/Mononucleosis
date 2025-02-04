@@ -145,27 +145,14 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
                     broadcast: true);
                 return;
             case BlobStage.Begin when blobTilesCount >= (stationUid.Comp?.StageCritical ?? StationBlobConfigComponent.DefaultStageCritical):
-            {
-                if (_nukeCode.SendNukeCodes(stationUid))//send the nuke code?
-                {
-                    blobRuleComp.Stage = BlobStage.Critical;
-                    _chatSystem.DispatchGlobalAnnouncement(
+                blobRuleComp.Stage = BlobStage.Critical;
+
+                _chatSystem.DispatchGlobalAnnouncement(
                     Loc.GetString("blob-alert-critical"),
                     stationName,
                     true,
                     blobRuleComp.CriticalAudio,
                     Color.Red);
-                }
-                else
-                {
-                    blobRuleComp.Stage = BlobStage.Critical;
-                    _chatSystem.DispatchGlobalAnnouncement(
-                    Loc.GetString("blob-alert-critical-NoNukeCode"),
-                    stationName,
-                    true,
-                    blobRuleComp.CriticalAudio,
-                    Color.Red);
-                }
 
                 _alertLevelSystem.SetLevel(stationUid, StationAlertCritical, true, true, true, true);
 
@@ -177,11 +164,17 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
                 },
                     broadcast: true);
                 return;
-            }
             case BlobStage.Critical when blobTilesCount >= (stationUid.Comp?.StageTheEnd ?? StationBlobConfigComponent.DefaultStageEnd):
-            {
                 blobRuleComp.Stage = BlobStage.TheEnd;
-                _roundEndSystem.EndRound();
+
+                var blobCores = EntityQueryEnumerator<BlobCoreComponent>();
+                while (blobCores.MoveNext(out var core, out var coreComp))
+                {
+                    if (TryComp<BlobResourceComponent>(core, out var resource))
+                    {
+                        resource.PointsPerPulsed *= 1000;
+                    }
+                }
 
                 RaiseLocalEvent(stationUid,
                     new BlobChangeLevelEvent
@@ -191,7 +184,6 @@ public sealed class BlobRuleSystem : GameRuleSystem<BlobRuleComponent>
                 },
                     broadcast: true);
                 return;
-            }
         }
     }
 
