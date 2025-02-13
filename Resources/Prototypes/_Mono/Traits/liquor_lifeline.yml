@@ -1,0 +1,8 @@
+- type: trait
+  id: LiquorLifeline
+  name: liquor-lifeline-trait-name
+  description: liquor-lifeline-trait-desc
+  category: Quirks
+  cost: 4
+  components:
+    - type: LiquorLifeline
