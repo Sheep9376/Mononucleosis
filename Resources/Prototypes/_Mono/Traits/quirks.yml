@@ -1,0 +1,9 @@
+- type: trait
+  id: Vigor
+  name: vigor-trait-name
+  description: vigor-trait-desc
+  category: Quirks
+  cost: 2
+  components:
+    - type: StaminaResistance
+      coefficient: 0.8 # 20% reduction in stamina damage
