@@ -7,3 +7,21 @@
   components:
     - type: StaminaResistance
       coefficient: 0.8 # 20% reduction in stamina damage
+
+- type: trait
+  id: LiquorLifeline
+  name: liquor-lifeline-trait-name
+  description: liquor-lifeline-trait-desc
+  category: Quirks
+  cost: 4
+  components:
+    - type: LiquorLifeline
+
+- type: trait
+  id: BionicArm
+  name: bionic-arm-trait-name
+  description: bionic-arm-trait-desc
+  category: Quirks
+  cost: 6
+  components:
+    - type: BionicArm
