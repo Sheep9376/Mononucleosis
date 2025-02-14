@@ -34,3 +34,6 @@
   cost: 2
   components:
     - type: SelfAware
+  speciesRestrictions:
+    - IPC
+    - Diona

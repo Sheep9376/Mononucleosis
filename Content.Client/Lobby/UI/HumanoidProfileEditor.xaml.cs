@@ -556,6 +556,27 @@ namespace Content.Client.Lobby.UI
                     if (selector.Preference)
                         selectionCount += trait.Cost;
 
+                    // Check species restrictions
+                    if (trait.SpeciesRestrictions != null && Profile?.Species != null && trait.SpeciesRestrictions.Contains(Profile.Species))
+                    {
+                        selector.Checkbox.Disabled = true;
+                        selector.Checkbox.Label.FontColorOverride = Color.Red;
+                        var tooltip = new Control
+                        {
+                            Children =
+                            {
+                                new Label
+                                {
+                                    Text = Loc.GetString("trait-species-restricted"),
+                                    HorizontalAlignment = HAlignment.Center,
+                                    FontColorOverride = Color.Gray,
+                                }
+                            }
+                        };
+                        selector.Checkbox.TooltipSupplier = _ => tooltip;
+                        selector.Preference = false;
+                    }
+
                     selector.PreferenceChanged += preference =>
                     {
                         if (preference)
