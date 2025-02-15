@@ -576,7 +576,7 @@ namespace Content.Client.Lobby.UI
                                 {
                                     Text = Loc.GetString("trait-species-restricted"),
                                     HorizontalAlignment = HAlignment.Center,
-                                    // FontColorOverride = Color.Gray,
+                                    FontColorOverride = Color.FromHex("#C8C8C8")
                                 }
                             }
                         };
